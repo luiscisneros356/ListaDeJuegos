@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.indigo.shade100,
         body: FutureBuilder(
           future: getJuegos(),
           builder: (BuildContext context, AsyncSnapshot<List<Juego>> snapshot) {

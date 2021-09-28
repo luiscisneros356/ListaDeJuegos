@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final juego = juegoFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Juego> juegoFromJson(String str) =>

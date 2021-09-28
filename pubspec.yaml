@@ -31,6 +31,8 @@ dependencies:
   http: 
   url_launcher: ^6.0.9
   card_swiper: ^1.0.4
+  animate_do:
+
 
 dev_dependencies:
   flutter_test:
