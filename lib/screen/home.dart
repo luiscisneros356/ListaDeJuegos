@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/api/juegos_api.dart';
 import 'package:flutter_application_2/models/models.dart';
@@ -35,30 +36,46 @@ class _HomeState extends State<Home> {
             if (snapshot.hasData)
               return Swiper(
                 itemCount: snapshot.data!.length,
-                layout: SwiperLayout.STACK,
-                itemHeight: 500,
-                itemWidth: 300,
+                viewportFraction: 0.8,
+                scale: 0.85,
+                itemHeight: 600,
+                itemWidth: 100,
                 itemBuilder: (BuildContext context, int index) {
                   final juego = snapshot.data![index];
 
-                  return GestureDetector(
-                    onTap: () {
-                      print(juego.title);
-                      Navigator.pushNamed(context, "detail", arguments: juego);
-                    },
-                    child: Hero(
-                      tag: juego.id,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: FadeInImage(
-                          placeholder: AssetImage("assets/giphy.gif"),
-                          image: NetworkImage(juego.thumbnail),
-                          height: 500,
-                          width: 300,
-                          fit: BoxFit.fill,
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, "detail",
+                              arguments: juego);
+                        },
+                        child: Hero(
+                          tag: juego.id,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              height: 400,
+                              width: 400,
+                              child: FadeInImage(
+                                placeholder: AssetImage("assets/giphy.gif"),
+                                image: NetworkImage(juego.thumbnail),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Text(
+                        juego.title,
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      )
+                    ],
                   );
                 },
               );

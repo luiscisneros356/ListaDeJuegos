@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/models/models.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,14 +10,15 @@ class Details extends StatelessWidget {
     final Juego juego = ModalRoute.of(context)!.settings.arguments as Juego;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
             SafeArea(
               child: Hero(
                 tag: juego.id,
                 child: Container(
                   width: double.infinity,
-                  height: 300,
+                  height: 700,
                   child: Image.network(
                     juego.thumbnail,
                     fit: BoxFit.fill,
@@ -26,84 +26,68 @@ class Details extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: FadeInLeft(
-                            delay: Duration(milliseconds: 500),
-                            child: Icon(Icons.games)),
-                        title: FadeInDown(
-                          delay: Duration(milliseconds: 1000),
-                          child: Text(
-                            juego.title,
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: FadeInRight(
-                          delay: Duration(milliseconds: 1500),
-                          child: Text(
-                            "Juego desarrollado por ${juego.developer}",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                          height: 50,
-                          child: FadeInUp(
-                            delay: Duration(milliseconds: 1900),
-                            child: Divider(
-                              color: Colors.orange.shade100,
-                              thickness: 3,
-                            ),
-                          )),
-                      FadeInUp(
-                        delay: Duration(milliseconds: 2000),
-                        child: Text(
-                          juego.shortDescription,
-                          style: TextStyle(fontSize: 20),
-                          textAlign: TextAlign.justify,
-                        ),
-                      ),
-                      SizedBox(
-                          height: 50,
-                          child: FadeIn(
-                            delay: Duration(milliseconds: 2100),
-                            child: Divider(
-                              color: Colors.orange.shade100,
-                              thickness: 3,
-                            ),
-                          )),
-                      FadeInUp(
-                        delay: Duration(milliseconds: 2200),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              launch(juego.freetogameProfileUrl);
-                            },
-                            child: Text("Ver mas detalles")),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            CustomCard(juego: juego),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black87,
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: Icon(
-          Icons.arrow_back,
-          size: 35,
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  const CustomCard({
+    Key? key,
+    required this.juego,
+  }) : super(key: key);
+
+  final Juego juego;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+          color: Colors.black87, borderRadius: BorderRadius.circular(20)),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              juego.title,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Juego desarrollado por ${juego.developer}",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              juego.shortDescription,
+              style: TextStyle(fontSize: 15, color: Colors.white),
+              textAlign: TextAlign.justify,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  launch(juego.freetogameProfileUrl);
+                },
+                child: Text("Ver mas detalles")),
+          ],
         ),
       ),
     );
